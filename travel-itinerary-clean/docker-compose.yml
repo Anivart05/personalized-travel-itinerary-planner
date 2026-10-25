@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  travel-planner-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wanderai-travel-planner
+    ports:
+      - "8000:8000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+      - ENVIRONMENT=production
+      - AI_PROVIDER=auto
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - SUPABASE_URL=${SUPABASE_URL:-}
+      - SUPABASE_KEY=${SUPABASE_KEY:-}
+    volumes:
+      - ./backend/itineraries.db:/app/backend/itineraries.db
+    restart: unless-stopped
